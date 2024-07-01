@@ -1,9 +1,18 @@
+import 'dart:ui';
+
+import 'package:bmi_calculator/input_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bmi_calculator/IconChild.dart';
+import 'package:bmi_calculator/ReusableCard.dart';
+import 'Constants.dart';
 
-const bottomContainerHeight = 80.0;
-const cardColor = Color(0xFF1D1E33);
-const bottomContainerColor = Color(0xFFEB1555);
+
+enum Gender{
+  male,
+  female
+}
+
 
 class InputPage extends StatefulWidget {
 
@@ -12,6 +21,20 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+
+  Color maleColor = kInActiveCardColor;
+  Color femaleColor = kInActiveCardColor;
+  Gender selectedGender = Gender.male;
+  int height = 130;
+
+  // 1 = male 2 == female
+  // void updateColor( Gender gender ){
+  //
+  //   maleColor = gender == Gender.male ? kActiveCardColor : kInActiveCardColor;
+  //   femaleColor = gender == Gender.female ? kActiveCardColor : kInActiveCardColor;
+  //
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +48,24 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    colour: cardColor,
-                    cardChild: CardChild( name: "Male", icon: FontAwesomeIcons.mars )
+                    function: () {
+                      setState(() {
+                            selectedGender = Gender.male;
+                      });
+                    },
+                    colour: selectedGender == Gender.male ? kActiveCardColor : kInActiveCardColor,
+                    cardChild: IconChild( name: "Male", icon: FontAwesomeIcons.mars )
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                      colour: cardColor,
-                      cardChild: CardChild( name: "Female", icon: FontAwesomeIcons.personDress)
+                      function: () {
+                        setState(() {
+                          selectedGender = Gender.female;
+                        });
+                      },
+                      colour: selectedGender == Gender.female ? kActiveCardColor : kInActiveCardColor,
+                      cardChild: IconChild( name: "Female", icon: FontAwesomeIcons.venus)
                   ),
                 ),
               ],
@@ -42,7 +75,45 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard( colour: cardColor),
+                  child: ReusableCard(
+                      colour: kActiveCardColor,
+                    cardChild:Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "HEIGHT",
+                          style: kLableTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              height.toString(),
+                              style: kNumberStyle
+                            ),
+                            const Text(
+                              "cm"
+                            ),
+                          ],
+                        ),
+                        Slider(
+                          value: height.toDouble(),
+                          onChanged: (double newValue) {
+                            setState(() {
+                              height = newValue.round();
+                            });
+                          },
+                          min: kSliderMin,
+                          max: kSliderMax,
+                          activeColor: const Color(0xFFEB1555),
+                          inactiveColor: const Color(0xFF8D8E98),
+
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -51,19 +122,19 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(colour: cardColor),
+                  child: ReusableCard(colour: kActiveCardColor),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: cardColor),
+                  child: ReusableCard(colour: kActiveCardColor),
                 ),
               ],
             ),
           ),
           Container(
-            color: bottomContainerColor,
+            color: kBottomContainerColor,
             margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomContainerHeight,
+            height: kBottomContainerHeight,
           )
 
         ],
@@ -73,57 +144,5 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-class CardChild extends StatelessWidget {
-
-  final String? name;
-  final IconData?  icon;
-
-  CardChild( { this.name, this.icon } );
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          //FontAwesomeIcons.icon,
-          icon ?? FontAwesomeIcons.question,
-          size: 80.0,
-        ),
-        const SizedBox(
-          height: 15.0,
-        ),
-        Text(
-          name ?? '',
-          style: const TextStyle(
-              color: Color(0xFF8D8E98),
-              fontSize: 18.0
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-
-  final Color? colour;
-  final Widget? cardChild;
-
-  ReusableCard({this.colour, this.cardChild});
 
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: colour,
-      ),
-      child: cardChild,
-      // height: 200.0,
-      // width: 170.0,
-    );
-  }
-}
