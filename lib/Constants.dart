@@ -7,6 +7,10 @@ const kInActiveCardColor = Color(0xFF111328);
 const kBottomContainerColor = Color(0xFFEB1555);
 const kSliderMin = 120.0;
 const kSliderMax = 220.0;
+const kSliderActiveColor = Color(0xFFEB1555);
+const kSliderInActiveColor = Color(0xFF8D8E98);
+const kFABColor = Color(0xFF4C4F5E);
+const kRoundedButtonColor = Color(0xFF4C4F5E);
 
 const kLableTextStyle = TextStyle(
     color: Color(0xFF8D8E98),
