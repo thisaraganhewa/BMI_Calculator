@@ -23,6 +23,7 @@ class _InputPageState extends State<InputPage> {
   Gender selectedGender = Gender.male;
   int height = 130;
   int weight = 50;
+  int age = 20;
 
 
   // 1 = male 2 == female
@@ -136,7 +137,7 @@ class _InputPageState extends State<InputPage> {
                           children: [
                             RoundedIconButton(
                               icon: const Icon(
-                                Icons.add,
+                                FontAwesomeIcons.plus,
                               ),
                               onPress: () {
                                 setState(() {
@@ -146,7 +147,7 @@ class _InputPageState extends State<InputPage> {
                             ),
                             RoundedIconButton(
                               icon: const Icon(
-                                Icons.minimize_sharp,
+                                FontAwesomeIcons.minus,
                               ),
                               onPress: () {
                                 setState(() {
@@ -161,7 +162,47 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: kActiveCardColor),
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "AGE",
+                          style: kLableTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RoundedIconButton(
+                              icon: const Icon(
+                                FontAwesomeIcons.plus,
+                              ),
+                              onPress: () {
+                                setState(() {
+                                  ++age;
+                                });
+                              },
+                            ),
+                            RoundedIconButton(
+                              icon: const Icon(
+                                FontAwesomeIcons.minus,
+                              ),
+                              onPress: () {
+                                setState(() {
+                                  --age;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
