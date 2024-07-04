@@ -23,6 +23,26 @@ const kNumberStyle = TextStyle(
 );
 
 const kBottomTextStyle = TextStyle(
-    fontSize: 30.0,
+    fontSize: 25.0,
     fontWeight: FontWeight.w900
+);
+
+const kYourResult = TextStyle(
+    fontSize: 35.0,
+    fontWeight: FontWeight.w900
+);
+
+const kResultNumberStyle = TextStyle(
+    fontSize: 80.0,
+    fontWeight: FontWeight.w900
+);
+
+const kResultTextStyle = TextStyle(
+    fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+  color: Color(0xFF24D876)
+);
+
+const kResultPromptStyle = TextStyle(
+  fontSize: 22.0
 );
