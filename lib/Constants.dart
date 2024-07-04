@@ -21,3 +21,8 @@ const kNumberStyle = TextStyle(
     fontSize: 50.0,
     fontWeight: FontWeight.w900
 );
+
+const kBottomTextStyle = TextStyle(
+    fontSize: 30.0,
+    fontWeight: FontWeight.w900
+);
