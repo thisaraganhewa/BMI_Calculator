@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/screens/ResultPage.dart';
 import 'package:bmi_calculator/screens/input_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -209,10 +211,20 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: (){
-              Navigator.pushNamed(
+
+              CalculatorBrain calculate = CalculatorBrain(height: height, weight: weight);
+
+              Navigator.push(
                   context,
-                  "/result"
+                  MaterialPageRoute(
+                      builder:(context) => ResultPage(
+                          bmi: calculate.calculateBMI(),
+                          result: calculate.getResult(),
+                          prompt: calculate.getPropmt()
+                      )
+                  )
               );
+
             },
             child: Container(
               color: kBottomContainerColor,

@@ -6,13 +6,21 @@ import 'package:flutter/material.dart';
 import '../components/ResultCard.dart';
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({super.key});
+
+  late final String bmi;
+  late final String result;
+  late final String prompt;
+
+  ResultPage({ required this.bmi, required this.result, required this.prompt} );
+
 
   @override
   State<ResultPage> createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,23 +44,24 @@ class _ResultPageState extends State<ResultPage> {
          ),
           Expanded(
               child: ResultCard(
-                cardChild: const Column(
+                cardChild: Column(
                   mainAxisAlignment:MainAxisAlignment.center,
                   children: [
                     Text(
-                      "OVERWEIGHT",
+                      widget.result,
                       style: kResultTextStyle,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric( vertical: 80.0 ),
+                      padding: const EdgeInsets.symmetric( vertical: 80.0 ),
                       child: Text(
-                        "23.0",
+                        widget.bmi,
                         style: kResultNumberStyle,
                       ),
                     ),
                     Text(
-                        "Prompt",
+                        widget.prompt,
                       style: kResultPromptStyle,
+                      textAlign: TextAlign.center,
                     ),
 
                   ],
@@ -62,10 +71,7 @@ class _ResultPageState extends State<ResultPage> {
           ),
           GestureDetector(
             onTap: (){
-              Navigator.pushNamed(
-                  context,
-                  "/"
-              );
+              Navigator.pop(context);
             },
             child: Container(
               color: kBottomContainerColor,
